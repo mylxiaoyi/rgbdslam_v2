@@ -130,14 +130,11 @@ int main(int argc, char** argv)
   }
 
   Graphical_UI* gui = NULL;
-	if (app.type() == QApplication::GuiClient){
-      gui = new Graphical_UI();
-      gui->show();
-      gui_connections(gui, &graph_mgr, &listener);
-      ui_connections(gui, &graph_mgr, &listener);//common connections for the user interfaces
-  } else {
-      ROS_WARN("Running without graphical user interface! See README or wiki page for how to interact with RGBDSLAM.");
-  }
+  gui = new Graphical_UI();
+  gui->show();
+  gui_connections(gui, &graph_mgr, &listener);
+  ui_connections(gui, &graph_mgr, &listener);//common connections for the user interfaces
+
   //Create Ros service interface with or without gui
   RosUi ui("rgbdslam"); //ui namespace for service calls
   ui_connections(&ui, &graph_mgr, &listener);//common connections for the user interfaces

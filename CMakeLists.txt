@@ -63,7 +63,7 @@ link_libraries(rgbdslam ${catkin_LIBRARIES})
 # Required 3rd party
 ####################################################
 # PCL #######################
-find_package(PCL 1.7 REQUIRED COMPONENTS common io)
+find_package(PCL 1.8 REQUIRED COMPONENTS common io)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
@@ -75,19 +75,20 @@ link_directories(${OCTOMAP_LIBRARY_DIRS})
 link_libraries(${OCTOMAP_LIBRARIES})
 
 # g2o #######################
+set(CMAKE_PREFIX_PATH "/home/mylxiaoyi/mybin")
 find_package(G2O REQUIRED)
+set(G2O_INCLUDE_DIRS "/home/mylxiaoyi/mybin/include")
 include_directories(${G2O_INCLUDE_DIRS})
+set(G2O_LIBRARY_DIRS "/home/mylxiaoyi/mybin/lib")
 link_directories(${G2O_LIBRARY_DIRS})
+set(G2O_LIBRARIES cholmod g2o_core g2o_stuff g2o_types_slam3d g2o_solver_cholmod  g2o_solver_pcg g2o_solver_csparse cxsparse g2o_incremental g2o_csparse_extension)
 link_libraries(${G2O_LIBRARIES})
 message("G2o-libraries "${G2O_LIBRARIES})
 
 # Qt ########################
 # http://qtnode.net/wiki/Qt4_with_cmake
-find_package(Qt4 REQUIRED)
-SET(QT_USE_QTXML TRUE)
-SET(QT_USE_QTOPENGL TRUE)
+find_package(Qt5 REQUIRED COMPONENTS Xml OpenGL Concurrent)
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
-include(${QT_USE_FILE})
 
 # OpenMP ########################
 find_package(OpenMP)
@@ -96,7 +97,7 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 # This is necessary as all ui files etc will get dumped in the bottom of then binary directory. 
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${QT_QTOPENGL_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/external/gicp/ann_1.1.2/include/ANN)
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${Qt5OpenGL_INCLUDE_DIRS} ${Qt5Concurrent_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/external/gicp/ann_1.1.2/include/ANN)
 
 #get_directory_property(clean ADDITIONAL_MAKE_CLEAN_FILES)
 #SET(clean external/siftgpu/linux/bin/libsiftgpu.so)
@@ -188,9 +189,9 @@ file(GLOB QT_FORMS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ui/*.ui)
 file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} resources/*.qrc)
 file(GLOB_RECURSE QT_MOC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS include/local/*.hpp src/qtros.h src/openni_listener.h src/qt_gui.h src/graph_manager.h src/glviewer.h src/ros_service_ui.h)
 
-QT4_ADD_RESOURCES(QT_RESOURCES_CPP ${QT_RESOURCES})
-QT4_WRAP_UI(QT_FORMS_HPP ${QT_FORMS})
-QT4_WRAP_CPP(QT_MOC_HPP ${QT_MOC})  
+QT5_ADD_RESOURCES(QT_RESOURCES_CPP ${QT_RESOURCES})
+QT5_WRAP_UI(QT_FORMS_HPP ${QT_FORMS})
+QT5_WRAP_CPP(QT_MOC_HPP ${QT_MOC})  
 
 ##############################################################################
 # Sources to Compile
@@ -225,7 +226,7 @@ add_dependencies(rgbdslam rgbdslam_gencpp)
 #SET(G2O_LIBS ${G2O_LIBRARIES} cholmod cxsparse)
 #SET(LIBS_LINK GL GLU -lgl2ps ${G2O_LIBS} ${QT_LIBRARIES} ${QT_QTOPENGL_LIBRARY} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS})
 #Use specific version of cxsparse, to avoid linker warning about possible conflicts between versions 2.2.3 (linked from g2o) and 3.1.0
-SET(LIBS_LINK GL GLU cholmod /usr/lib/libcxsparse.so.2.2.3 ${G2O_LIBRARIES} ${QT_LIBRARIES} ${QT_QTOPENGL_LIBRARY} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS})
+SET(LIBS_LINK GL GLU cholmod cxsparse ${G2O_LIBRARIES} ${Qt5Xml_LIBRARIES} ${Qt5OpenGL_LIBRARIES} ${Qt5Concurrent_LIBRARIES} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS})
 #-lboost_signals -lrt -loctomap -loctomap_server -loctomath)
 
 IF (${USE_SIFT_GPU})

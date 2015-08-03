@@ -6,7 +6,7 @@
 #include <octomap/ColorOcTree.h>
 #include <octomap/Pointcloud.h>
 #include <octomap/octomap.h>
-#include <qtconcurrentrun.h>
+#include <QtConcurrentRun>
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include "renderable.h"

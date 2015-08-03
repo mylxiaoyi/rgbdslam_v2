@@ -32,6 +32,15 @@
 #include "glviewer.h"
 #include <QList>
 #include <QComboBox>
+#include <QStatusBar>
+#include <QLabel>
+#include <QFileDialog>
+#include <QProgressBar>
+#include <QScrollArea>
+#include <QMenuBar>
+#include <QSplitter>
+#include <QMessageBox>
+#include <QInputDialog>
 
 ///Constructs a QT GUI for easy control of RGBDSLAM
 Graphical_UI::Graphical_UI() : filename("quicksave.pcd"), glviewer(NULL)
