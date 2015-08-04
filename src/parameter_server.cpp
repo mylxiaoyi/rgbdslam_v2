@@ -24,7 +24,8 @@ void ParameterServer::defaultConfig() {
   // Input data settings
   addOption("topic_image_mono",              std::string("/camera/rgb/image_color"),    "Color or grayscale image ros topic");
   addOption("camera_info_topic",             std::string("/camera/rgb/camera_info"),    "Required for backprojection if no pointcloud topic is given");
-  addOption("topic_image_depth",             std::string("/camera/depth_registered/sw_registered/image_rect_raw"),        "Depth image ros topic");
+  //addOption("topic_image_depth",             std::string("/camera/depth_registered/sw_registered/image_rect_raw"),        "Depth image ros topic");
+  addOption("topic_image_depth",             std::string("/camera/depth/image"),        "Depth image ros topic");
   addOption("topic_points",                  std::string(""),                           "If omitted, xyz will be computed from depth image. ");
   addOption("wide_topic",                    std::string(""),                           "Topics for stereo cam, e.g. /wide_stereo/left/image_mono");
   addOption("wide_cloud_topic",              std::string(""),                           "Topics for stereo cam e.g. /wide_stereo/points2");

@@ -22,3 +22,5 @@
 *.rar
 *.tar
 *.zip
+src/*.pro*
+build*

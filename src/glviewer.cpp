@@ -129,7 +129,8 @@ GLViewer::GLViewer(QWidget *parent)
     ROS_DEBUG_COND(!this->format().stereo(), "Stereo not supported");
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); //can make good use of more space
     viewpoint_tf_.setToIdentity();
-    this->renderText(0,0,0, "RGBDSLAMv2", QFont("Monospace", 14));
+    //FIXME: this is a bug in renderText
+    //this->renderText(0,0,0, "RGBDSLAMv2"/*, QFont("Monospace", 14)*/);
 }
 
 GLViewer::~GLViewer() { }

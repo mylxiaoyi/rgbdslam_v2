@@ -115,7 +115,9 @@ int main(int argc, char** argv)
   QtROS qtRos(argc, argv, "rgbdslam"); //ros node name & namespace
 
   //Depending an use_gui on the Parameter Server, a gui- or a headless application is used
-  QApplication app(argc, argv, ParameterServer::instance()->get<bool>("use_gui")); 
+  //QApplication app(argc, argv, ParameterServer::instance()->get<bool>("use_gui"));
+
+  QApplication app(argc, argv);
 
   GraphManager graph_mgr;
   //Instantiate the kinect image listener
